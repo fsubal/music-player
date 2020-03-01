@@ -11,7 +11,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="stylesheet" href="https://unpkg.com/marx-css/css/marx.min.css" />
+          <link rel="stylesheet" href="/marx.min.css" />
         </Head>
         <body>
           <main>

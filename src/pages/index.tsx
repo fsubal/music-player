@@ -12,7 +12,7 @@ const RootIndex: NextPage<Props> = ({ userAgent }) => (
 
     <div>
       <Link href="/tracks/[id]" as="/tracks/1">
-        id: 1
+        <a>id: 1</a>
       </Link>
     </div>
   </div>

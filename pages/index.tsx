@@ -8,7 +8,6 @@ interface Props {
 
 const RootIndex: NextPage<Props> = ({ userAgent }) => (
   <div>
-    <h1>Hello world!</h1>
     <p>user agent: {userAgent}</p>
 
     <div>
@@ -16,8 +15,6 @@ const RootIndex: NextPage<Props> = ({ userAgent }) => (
         id: 1
       </Link>
     </div>
-
-    <footer>&copy; nothing</footer>
   </div>
 )
 

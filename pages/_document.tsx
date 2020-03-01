@@ -16,6 +16,7 @@ export default class MyDocument extends Document {
         <body>
           <main>
             <Main />
+            <footer>&copy; nothing</footer>
           </main>
           <NextScript />
         </body>

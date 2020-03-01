@@ -8,9 +8,7 @@ interface Props {
 const TracksShow: NextPage<Props> = ({ id }) => {
   return (
     <div>
-      <h1>Hello world!</h1>
       <p>id: {id}</p>
-      <footer>&copy; nothing</footer>
     </div>
   )
 }

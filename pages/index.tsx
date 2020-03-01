@@ -1,11 +1,15 @@
 import React from 'react'
 import { NextPage } from 'next'
 
-const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => <h1>Hello world! - user agent: {userAgent}</h1>
+interface Props {
+  userAgent: string
+}
 
-Home.getInitialProps = async ({ req }) => {
+const RootIndex: NextPage<Props> = ({ userAgent }) => <h1>Hello world! - user agent: {userAgent}</h1>
+
+RootIndex.getInitialProps = async ({ req }): Promise<Props> => {
   const userAgent = req ? req.headers['user-agent'] ?? '' : navigator.userAgent
   return { userAgent }
 }
 
-export default Home
+export default RootIndex

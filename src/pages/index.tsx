@@ -1,28 +1,56 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import fetch from 'isomorphic-unfetch'
+import apolloClient from '../lib/apollo-client'
+import gql from 'graphql-tag'
+import { Album } from '../domains/schema'
 
 interface Props {
-  rows: any
+  albums: (Pick<Album, 'id' | 'albumTitle'> & {
+    albumCovers: {
+      url: string
+    }[]
+  })[]
 }
 
-const RootIndex: NextPage<Props> = ({ rows }) => (
+const RootIndex: NextPage<Props> = ({ albums }) => (
   <div>
-    <pre>dump: {JSON.stringify(rows)}</pre>
-
     <div>
-      <Link href="/tracks/[id]" as="/tracks/1">
-        <a>id: 1</a>
-      </Link>
+      {albums.map(album => (
+        <Link key={album.id!} href="/tracks/[id]" as={`/tracks/${album.id}`}>
+          <a>
+            {album.albumTitle}
+            <br />
+            {album.albumCovers.map(cover => (
+              <img key={cover?.url} src={cover?.url} />
+            ))}
+          </a>
+        </Link>
+      ))}
     </div>
   </div>
 )
 
 RootIndex.getInitialProps = async (): Promise<Props> => {
-  const rows = await fetch('http://localhost:3000/api/test').then(r => r.json())
+  const { data, errors } = await apolloClient.query({
+    query: gql`
+      query {
+        albums {
+          id
+          albumTitle
+          albumCovers {
+            url
+          }
+        }
+      }
+    `,
+  })
 
-  return { rows }
+  if (errors) {
+    throw errors
+  }
+
+  return data
 }
 
 export default RootIndex

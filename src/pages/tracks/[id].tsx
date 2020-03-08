@@ -2,7 +2,7 @@ import React from 'react'
 import { NextPage } from 'next'
 
 interface Props {
-  id: number
+  id: string
 }
 
 const TracksShow: NextPage<Props> = ({ id }) => {
@@ -14,7 +14,7 @@ const TracksShow: NextPage<Props> = ({ id }) => {
 }
 
 TracksShow.getInitialProps = async ({ query }): Promise<Props> => {
-  return { id: Number(query.id) }
+  return { id: String(query.id) }
 }
 
 export default TracksShow

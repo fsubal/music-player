@@ -10,6 +10,7 @@ export type Scalars = {
 
 export type Album = {
    __typename?: 'Album',
+  id?: Maybe<Scalars['ID']>,
   albumTitle?: Maybe<Scalars['String']>,
   albumCovers: Array<Maybe<Attachment>>,
   tracks: Array<Maybe<Scalars['ID']>>,
@@ -51,6 +52,7 @@ export type Thumbnails = {
 
 export type Track = {
    __typename?: 'Track',
+  id?: Maybe<Scalars['ID']>,
   name: Scalars['String'],
   albums: Array<Maybe<Scalars['ID']>>,
   track: Scalars['String'],

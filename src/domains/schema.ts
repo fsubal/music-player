@@ -12,7 +12,7 @@ export type Album = {
    __typename?: 'Album',
   id?: Maybe<Scalars['ID']>,
   albumTitle?: Maybe<Scalars['String']>,
-  albumCovers: Array<Maybe<Attachment>>,
+  albumCovers: Array<Attachment>,
   tracks: Array<Maybe<Scalars['ID']>>,
 };
 

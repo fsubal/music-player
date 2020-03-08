@@ -22,7 +22,7 @@ const RootIndex: NextPage<Props> = ({ albums }) => (
             {album.albumTitle}
             <br />
             {album.albumCovers.map(cover => (
-              <img key={cover?.url} src={cover?.url} />
+              <img key={cover.url} src={cover.url} />
             ))}
           </a>
         </Link>

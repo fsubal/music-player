@@ -1,10 +1,6 @@
-import fs from 'fs'
-import path from 'path'
-import { ApolloServer, gql } from 'apollo-server-micro'
+import { ApolloServer } from 'apollo-server-micro'
 import airtable, { toEntity } from '../../lib/airtable'
-
-const schema = fs.readFileSync(path.resolve(process.cwd(), 'src', 'pages', 'api', 'schema.gql')).toString()
-const typeDefs = gql(schema)
+import typeDefs from './schema.gql'
 
 const apolloServer = new ApolloServer({
   typeDefs,

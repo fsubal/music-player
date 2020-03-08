@@ -1,8 +1,6 @@
 {
-  "build": {
-    "env": {
-      "AIRTABLE_API_KEY": "@airtable-api-key",
-      "AIRTABLE_WORKSPACE_ID": "@airtable-workspace-id"
-    }
+  "env": {
+    "AIRTABLE_API_KEY": "@airtable-api-key",
+    "AIRTABLE_WORKSPACE_ID": "@airtable-workspace-id"
   }
 }

@@ -35,7 +35,7 @@ indent_size = 2
 # Composer - https://getcomposer.org/doc/04-schema.md
 [{*.json,composer.lock}]
 indent_style = space
-indent_size = 4
+indent_size = 2
 
 # NPM - https://docs.npmjs.com/files/package.json
 # TypeScript - https://www.typescriptlang.org/

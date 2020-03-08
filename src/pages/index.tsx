@@ -1,14 +1,15 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Link from 'next/link'
+import fetch from 'isomorphic-unfetch'
 
 interface Props {
-  userAgent: string
+  rows: any
 }
 
-const RootIndex: NextPage<Props> = ({ userAgent }) => (
+const RootIndex: NextPage<Props> = ({ rows }) => (
   <div>
-    <p>user agent: {userAgent}</p>
+    <pre>dump: {JSON.stringify(rows)}</pre>
 
     <div>
       <Link href="/tracks/[id]" as="/tracks/1">
@@ -18,9 +19,10 @@ const RootIndex: NextPage<Props> = ({ userAgent }) => (
   </div>
 )
 
-RootIndex.getInitialProps = async ({ req }): Promise<Props> => {
-  const userAgent = req ? req.headers['user-agent'] ?? '' : navigator.userAgent
-  return { userAgent }
+RootIndex.getInitialProps = async (): Promise<Props> => {
+  const rows = await fetch('http://localhost:3000/api/test').then(r => r.json())
+
+  return { rows }
 }
 
 export default RootIndex

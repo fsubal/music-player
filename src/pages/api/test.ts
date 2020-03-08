@@ -1,4 +1,4 @@
-import airtable, { toEntity } from '../../api/airtable'
+import airtable, { toEntity } from '../../lib/airtable'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (_req: NextApiRequest, res: NextApiResponse) => {

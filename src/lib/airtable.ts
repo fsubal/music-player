@@ -1,5 +1,7 @@
 import Airtable from 'airtable'
 
+export type Attachment = Airtable.Attachment
+
 const airtable = new Airtable({
   endpointUrl: 'https://api.airtable.com',
   apiKey: process.env.AIRTABLE_API_KEY!,

@@ -1,0 +1,9 @@
+query {
+  albums {
+    id
+    albumTitle
+    albumCovers {
+      url
+    }
+  }
+}

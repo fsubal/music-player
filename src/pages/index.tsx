@@ -1,9 +1,8 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import apolloClient from '../lib/apollo-client'
-import gql from 'graphql-tag'
 import { Album } from '../domains/schema'
+import { useQuery } from '@apollo/react-hooks'
 
 interface Props {
   albums: (Pick<Album, 'id' | 'albumTitle'> & {
@@ -13,44 +12,34 @@ interface Props {
   })[]
 }
 
-const RootIndex: NextPage<Props> = ({ albums }) => (
-  <div>
-    <div>
-      {albums.map(album => (
-        <Link key={album.id!} href="/tracks/[id]" as={`/tracks/${album.id}`}>
-          <a>
-            {album.albumTitle}
-            <br />
-            {album.albumCovers.map(cover => (
-              <img key={cover.url} src={cover.url} />
-            ))}
-          </a>
-        </Link>
-      ))}
-    </div>
-  </div>
-)
+const RootIndex: NextPage<Props> = () => {
+  const { loading, data, error } = useQuery<Props>(require('./index.gql'))
 
-RootIndex.getInitialProps = async (): Promise<Props> => {
-  const { data, errors } = await apolloClient.query({
-    query: gql`
-      query {
-        albums {
-          id
-          albumTitle
-          albumCovers {
-            url
-          }
-        }
-      }
-    `,
-  })
-
-  if (errors) {
-    throw errors
+  if (loading) {
+    return <>loading...</>
   }
 
-  return data
+  return data?.albums ? (
+    <div>
+      <div>
+        {data.albums.map(album => (
+          <Link key={album.id!} href="/tracks/[id]" as={`/tracks/${album.id}`}>
+            <a>
+              {album.albumTitle}
+              <br />
+              {album.albumCovers.map(cover => (
+                <img key={cover.url} src={cover.url} />
+              ))}
+            </a>
+          </Link>
+        ))}
+      </div>
+    </div>
+  ) : error ? (
+    <div>Error!</div>
+  ) : (
+    <div>Not Found</div>
+  )
 }
 
 export default RootIndex

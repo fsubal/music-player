@@ -1,5 +1,6 @@
-type Branded<T, U extends string> = T & { [K in U]: never }
+declare module '*.gql' {
+  import { DocumentNode } from 'graphql'
+  const _: DocumentNode
 
-interface BaseEntity<Name extends string> {
-  id: Branded<string, Name>
+  export = _
 }

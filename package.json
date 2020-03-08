@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "airtable": "^0.8.1",
     "apollo-server-micro": "^2.10.1",
     "graphql": "^14.6.0",
     "micro": "^9.3.4",
@@ -24,6 +25,7 @@
     "@typescript-eslint/parser": "^2.21.0",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.18.3",
+    "now": "^17.0.4",
     "prettier": "^1.19.1",
     "typescript": "^3.8.3"
   }

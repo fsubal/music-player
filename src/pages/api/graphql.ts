@@ -16,6 +16,11 @@ const apolloServer = new ApolloServer({
           .all()
           .then(records => records.map(toEntity))
       },
+      async album(_source, { id }) {
+        return airtable('Albums')
+          .find(id)
+          .then(toEntity)
+      },
     },
     Album: {
       albumTitle(album: any) {

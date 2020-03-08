@@ -12,3 +12,8 @@ const airtable = new Airtable({
  * - don't import this from /pages, except for /pages/api
  */
 export default airtable.base(process.env.AIRTABLE_WORKSPACE_ID!)
+
+export const toEntity = <T>({ id, fields }: Airtable.Record<T>): T & { id: string } => ({
+  id,
+  ...fields,
+})

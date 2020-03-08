@@ -1,47 +1,10 @@
+import fs from 'fs'
+import path from 'path'
 import { ApolloServer, gql } from 'apollo-server-micro'
 import airtable, { toEntity } from '../../lib/airtable'
 
-const typeDefs = gql`
-  type Thumbnail {
-    url: String!
-    width: Int!
-    height: Int!
-  }
-
-  type Thumbnails {
-    small: Thumbnail
-    large: Thumbnail
-    full: Thumbnail
-  }
-
-  type Attachment {
-    id: String!
-    url: String!
-    filename: String!
-    size: Int!
-    type: String!
-    thumbnails: Thumbnails
-  }
-
-  type Track {
-    name: String!
-    albums: [ID]!
-    track: String!
-    side: String!
-    mustHearTracks: Boolean
-    specificInstrumentalCredit: String
-  }
-
-  type Album {
-    albumTitle: String
-    albumCovers: [Attachment]!
-    tracks: [ID]!
-  }
-
-  type Query {
-    albums: [Album]!
-  }
-`
+const schema = fs.readFileSync(path.join(__dirname, 'schema.gql')).toString()
+const typeDefs = gql(schema)
 
 const apolloServer = new ApolloServer({
   typeDefs,

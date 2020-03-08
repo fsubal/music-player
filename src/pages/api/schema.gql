@@ -1,0 +1,44 @@
+type Thumbnail {
+  url: String!
+  width: Int!
+  height: Int!
+}
+
+type Thumbnails {
+  small: Thumbnail
+  large: Thumbnail
+  full: Thumbnail
+}
+
+type Attachment {
+  id: String!
+  url: String!
+  filename: String!
+  size: Int!
+  type: String!
+  thumbnails: Thumbnails
+}
+
+enum Side {
+  A
+  B
+}
+
+type Track {
+  name: String!
+  albums: [ID]!
+  track: String!
+  side: Side!
+  mustHearTracks: Boolean
+  specificInstrumentalCredit: String
+}
+
+type Album {
+  albumTitle: String
+  albumCovers: [Attachment]!
+  tracks: [ID]!
+}
+
+type Query {
+  albums: [Album]!
+}

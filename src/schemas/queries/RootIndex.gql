@@ -1,4 +1,4 @@
-query Index {
+query RootIndex {
   albums {
     id
     albumTitle

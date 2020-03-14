@@ -1,10 +1,10 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { useIndexQuery } from '../schemas/dist/client'
+import { useRootIndexQuery } from '../schemas/dist/client'
 
 const RootIndex: NextPage = () => {
-  const { loading, data, error } = useIndexQuery()
+  const { loading, data, error } = useRootIndexQuery()
 
   if (loading) {
     return <>loading...</>

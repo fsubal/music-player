@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server-micro'
 import airtable, { toEntity } from '../../lib/airtable'
-import typeDefs from './schema.gql'
+import typeDefs from '../../schemas/defs.gql'
 
 const apolloServer = new ApolloServer({
   typeDefs,

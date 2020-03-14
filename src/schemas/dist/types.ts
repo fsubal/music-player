@@ -29,6 +29,12 @@ export type Attachment = {
 export type Query = {
    __typename?: 'Query',
   albums: Array<Maybe<Album>>,
+  album?: Maybe<Album>,
+};
+
+
+export type QueryAlbumArgs = {
+  id: Scalars['ID']
 };
 
 export enum Side {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { Album } from '../domains/schema'
+import { Album } from '../schemas/dist/types'
 import { useQuery } from '@apollo/react-hooks'
 
 interface Props {

@@ -1,8 +1,23 @@
 overwrite: true
 schema:
-  - 'src/schemas/typedefs/*.gql'
-  - 'src/schemas/pages/*.gql'
+  - ./src/schemas/typedefs/*.gql
+documents:
+  - ./src/schemas/queries/*.gql
+  - ./src/schemas/mutations/*.gql
 generates:
-  src/schemas/dist/types.ts:
+  ./src/schemas/dist/resolvers.ts:
     plugins:
-      - 'typescript'
+      - typescript
+      - typescript-resolvers
+  ./src/schemas/dist/client.tsx:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withComponent: false
+      withHooks: true
+      withHOC: false
+  ./src/schemas/schema.json:
+    plugins:
+      - introspection

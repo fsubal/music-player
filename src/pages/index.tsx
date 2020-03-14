@@ -1,19 +1,10 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { Album } from '../schemas/dist/types'
-import { useQuery } from '@apollo/react-hooks'
+import { useIndexQuery } from '../schemas/dist/client'
 
-interface Props {
-  albums: (Pick<Album, 'id' | 'albumTitle'> & {
-    albumCovers: {
-      url: string
-    }[]
-  })[]
-}
-
-const RootIndex: NextPage<Props> = () => {
-  const { loading, data, error } = useQuery<Props>(require('./index.gql'))
+const RootIndex: NextPage = () => {
+  const { loading, data, error } = useIndexQuery()
 
   if (loading) {
     return <>loading...</>

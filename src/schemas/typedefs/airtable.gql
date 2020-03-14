@@ -42,6 +42,6 @@ type Album {
 }
 
 type Query {
-  albums: [Album]!
+  albums: [Album!]!
   album(id: ID!): Album
 }

@@ -1,9 +1,9 @@
 import { ApolloServer } from 'apollo-server-micro'
 import airtable, { toEntity } from '../../lib/airtable'
-import typeDefs from '../../schemas/defs.gql'
+import airtableTypeDefs from '../../schemas/typedefs/airtable.gql'
 
 const apolloServer = new ApolloServer({
-  typeDefs,
+  typeDefs: airtableTypeDefs,
   resolvers: {
     Query: {
       async albums() {

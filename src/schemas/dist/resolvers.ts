@@ -13,9 +13,17 @@ export type Scalars = {
 export type Album = {
    __typename?: 'Album',
   id?: Maybe<Scalars['ID']>,
-  albumTitle?: Maybe<Scalars['String']>,
+  artist?: Maybe<Artist>,
+  albumTitle: Scalars['String'],
   albumCovers: Array<Attachment>,
+  year: Scalars['Int'],
+  shouldListenAlbum: Scalars['String'],
   tracks: Array<Maybe<Scalars['ID']>>,
+};
+
+export type Artist = {
+   __typename?: 'Artist',
+  name: Scalars['String'],
 };
 
 export type Attachment = {
@@ -145,6 +153,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
   Album: ResolverTypeWrapper<Album>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
+  Artist: ResolverTypeWrapper<Artist>,
   String: ResolverTypeWrapper<Scalars['String']>,
   Attachment: ResolverTypeWrapper<Attachment>,
   Int: ResolverTypeWrapper<Scalars['Int']>,
@@ -160,6 +169,7 @@ export type ResolversParentTypes = {
   Query: {},
   Album: Album,
   ID: Scalars['ID'],
+  Artist: Artist,
   String: Scalars['String'],
   Attachment: Attachment,
   Int: Scalars['Int'],
@@ -172,9 +182,17 @@ export type ResolversParentTypes = {
 
 export type AlbumResolvers<ContextType = any, ParentType extends ResolversParentTypes['Album'] = ResolversParentTypes['Album']> = {
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
-  albumTitle?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  artist?: Resolver<Maybe<ResolversTypes['Artist']>, ParentType, ContextType>,
+  albumTitle?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   albumCovers?: Resolver<Array<ResolversTypes['Attachment']>, ParentType, ContextType>,
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  shouldListenAlbum?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   tracks?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
+export type ArtistResolvers<ContextType = any, ParentType extends ResolversParentTypes['Artist'] = ResolversParentTypes['Artist']> = {
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
@@ -220,6 +238,7 @@ export type TrackResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type Resolvers<ContextType = any> = {
   Album?: AlbumResolvers<ContextType>,
+  Artist?: ArtistResolvers<ContextType>,
   Attachment?: AttachmentResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   Thumbnail?: ThumbnailResolvers<ContextType>,

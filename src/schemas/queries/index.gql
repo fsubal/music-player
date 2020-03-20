@@ -2,8 +2,12 @@ query RootIndex {
   albums {
     id
     albumTitle
+    shouldListenAlbum
     albumCovers {
       url
+    }
+    artist {
+      name
     }
   }
 }

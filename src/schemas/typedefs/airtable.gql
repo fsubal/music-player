@@ -34,10 +34,17 @@ type Track {
   specificInstrumentalCredit: String
 }
 
+type Artist {
+  name: String!
+}
+
 type Album {
   id: ID
-  albumTitle: String
+  artist: Artist
+  albumTitle: String!
   albumCovers: [Attachment!]!
+  year: Int!
+  shouldListenAlbum: String!
   tracks: [ID]!
 }
 

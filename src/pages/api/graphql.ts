@@ -19,11 +19,22 @@ const apolloServer = new ApolloServer({
       },
     },
     Album: {
+      artist() {
+        return {
+          name: 'David Bowie',
+        }
+      },
       albumTitle(album: any) {
         return album['Album Title']
       },
       albumCovers(album: any) {
         return album['Album Cover(s)']
+      },
+      shouldListenAlbum(album: any) {
+        return album['Should I Listen?']
+      },
+      year(album: any) {
+        return album['Year']
       },
       tracks(album: any) {
         return album['Tracks']

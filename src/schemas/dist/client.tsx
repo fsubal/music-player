@@ -14,9 +14,17 @@ export type Scalars = {
 export type Album = {
    __typename?: 'Album',
   id?: Maybe<Scalars['ID']>,
-  albumTitle?: Maybe<Scalars['String']>,
+  artist?: Maybe<Artist>,
+  albumTitle: Scalars['String'],
   albumCovers: Array<Attachment>,
+  year: Scalars['Int'],
+  shouldListenAlbum: Scalars['String'],
   tracks: Array<Maybe<Scalars['ID']>>,
+};
+
+export type Artist = {
+   __typename?: 'Artist',
+  name: Scalars['String'],
 };
 
 export type Attachment = {
@@ -77,10 +85,13 @@ export type RootIndexQuery = (
   { __typename?: 'Query' }
   & { albums: Array<(
     { __typename?: 'Album' }
-    & Pick<Album, 'id' | 'albumTitle'>
+    & Pick<Album, 'id' | 'albumTitle' | 'shouldListenAlbum'>
     & { albumCovers: Array<(
       { __typename?: 'Attachment' }
       & Pick<Attachment, 'url'>
+    )>, artist: Maybe<(
+      { __typename?: 'Artist' }
+      & Pick<Artist, 'name'>
     )> }
   )> }
 );
@@ -91,8 +102,12 @@ export const RootIndexDocument = gql`
   albums {
     id
     albumTitle
+    shouldListenAlbum
     albumCovers {
       url
+    }
+    artist {
+      name
     }
   }
 }

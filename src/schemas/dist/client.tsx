@@ -85,7 +85,7 @@ export type RootIndexQuery = (
   { __typename?: 'Query' }
   & { albums: Array<(
     { __typename?: 'Album' }
-    & Pick<Album, 'id' | 'albumTitle' | 'shouldListenAlbum'>
+    & Pick<Album, 'id' | 'albumTitle' | 'year' | 'shouldListenAlbum'>
     & { albumCovers: Array<(
       { __typename?: 'Attachment' }
       & Pick<Attachment, 'url'>
@@ -102,6 +102,7 @@ export const RootIndexDocument = gql`
   albums {
     id
     albumTitle
+    year
     shouldListenAlbum
     albumCovers {
       url

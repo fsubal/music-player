@@ -2,6 +2,7 @@ query RootIndex {
   albums {
     id
     albumTitle
+    year
     shouldListenAlbum
     albumCovers {
       url

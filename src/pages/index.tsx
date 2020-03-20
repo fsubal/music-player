@@ -88,7 +88,9 @@ const AlbumItem: React.FC<{ album: Album }> = ({ album }) => {
     <Link href="/tracks/[id]" as={`/tracks/${album.id}`}>
       <AlbumLink>
         <CoverImage key={cover.url} src={cover.url} />
-        <AlbumTitle>{album.albumTitle}</AlbumTitle>
+        <AlbumTitle>
+          {album.albumTitle}（{album.year}）
+        </AlbumTitle>
       </AlbumLink>
     </Link>
   )

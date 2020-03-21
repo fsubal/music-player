@@ -11,11 +11,11 @@ type Thumbnails {
 }
 
 type Attachment {
-  id: String!
-  url: String!
-  filename: String!
-  size: Int!
-  type: String!
+  id: String
+  url: String
+  filename: String
+  size: Int
+  type: String
   thumbnails: Thumbnails
 }
 
@@ -36,19 +36,19 @@ type Track {
 
 type Artist {
   name: String!
+  albums: [Album!]!
 }
 
 type Album {
   id: ID
-  artist: Artist
   albumTitle: String!
   albumCovers: [Attachment!]!
   year: Int!
   shouldListenAlbum: String!
-  tracks: [ID]!
+  tracks: [ID]
 }
 
 type Query {
-  albums: [Album!]!
+  artist: Artist
   album(id: ID!): Album
 }

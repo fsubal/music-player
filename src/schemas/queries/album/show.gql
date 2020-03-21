@@ -1,0 +1,14 @@
+query AlbumShow($id: ID!) {
+  album(id: $id) {
+    id
+    albumTitle
+    year
+    shouldListenAlbum
+    albumCovers {
+      url
+    }
+    artist {
+      name
+    }
+  }
+}

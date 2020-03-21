@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { useRootIndexQuery, RootIndexQuery } from '../schemas/dist/client'
+import { useRootIndexQuery, Artist, Album } from '../schemas/dist/client'
 
 const RootIndex: NextPage = () => {
   const { loading, data, error } = useRootIndexQuery()
@@ -11,23 +11,9 @@ const RootIndex: NextPage = () => {
     return <>loading...</>
   }
 
-  const essential = data?.albums?.find(album => album.shouldListenAlbum === 'Essential')
-
-  return data?.albums ? (
+  return data?.artist ? (
     <div>
-      {essential && (
-        <Jumbotron cover={essential.albumCovers[0].url} title={essential.artist?.name}>
-          <ArtistName>{essential.artist?.name}</ArtistName>
-        </Jumbotron>
-      )}
-
-      <Subheader>Albums</Subheader>
-
-      <Grid>
-        {data.albums.map(album => (
-          <AlbumItem key={album.id!} album={album} />
-        ))}
-      </Grid>
+      <AlbumList artist={data.artist} />
     </div>
   ) : error ? (
     <div>Error!</div>
@@ -37,6 +23,28 @@ const RootIndex: NextPage = () => {
 }
 
 export default RootIndex
+
+const AlbumList: React.FC<{ artist: Artist }> = ({ artist }) => {
+  const essential = artist.albums.find(album => album.shouldListenAlbum === 'Essential')
+
+  return (
+    <div>
+      {essential && (
+        <Jumbotron cover={essential.albumCovers[0].url!} title={artist.name}>
+          <ArtistName>{artist.name}</ArtistName>
+        </Jumbotron>
+      )}
+
+      <Subheader>Albums</Subheader>
+
+      <Grid>
+        {artist.albums.map(album => (
+          <AlbumItem key={album.id!} album={album} />
+        ))}
+      </Grid>
+    </div>
+  )
+}
 
 const Jumbotron = styled.div<{ cover: string }>`
   position: relative;
@@ -79,15 +87,13 @@ const Grid = styled.div`
   grid-gap: 2%;
 `
 
-type Album = RootIndexQuery['albums'] extends Array<infer Album> ? Album : never
-
 const AlbumItem: React.FC<{ album: Album }> = ({ album }) => {
   const [cover] = album.albumCovers
 
   return (
     <Link href="/tracks/[id]" as={`/tracks/${album.id}`}>
       <AlbumLink>
-        <CoverImage key={cover.url} src={cover.url} />
+        <CoverImage key={cover.url!} src={cover.url!} />
         <AlbumTitle>
           {album.albumTitle}（{album.year}）
         </AlbumTitle>

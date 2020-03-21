@@ -6,24 +6,22 @@ const apolloServer = new ApolloServer({
   typeDefs: airtableTypeDefs,
   resolvers: {
     Query: {
-      async albums() {
-        return airtable('Albums')
-          .select()
-          .all()
-          .then(records => records.map(toEntity))
-      },
       async album(_source, { id }) {
         return airtable('Albums')
           .find(id)
           .then(toEntity)
       },
-    },
-    Album: {
-      artist() {
+      async artist() {
         return {
           name: 'David Bowie',
+          albums: await airtable('Albums')
+            .select()
+            .all()
+            .then(records => records.map(toEntity)),
         }
       },
+    },
+    Album: {
       albumTitle(album: any) {
         return album['Album Title']
       },

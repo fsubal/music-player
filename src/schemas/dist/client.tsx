@@ -14,32 +14,32 @@ export type Scalars = {
 export type Album = {
    __typename?: 'Album',
   id?: Maybe<Scalars['ID']>,
-  artist?: Maybe<Artist>,
   albumTitle: Scalars['String'],
   albumCovers: Array<Attachment>,
   year: Scalars['Int'],
   shouldListenAlbum: Scalars['String'],
-  tracks: Array<Maybe<Scalars['ID']>>,
+  tracks?: Maybe<Array<Maybe<Scalars['ID']>>>,
 };
 
 export type Artist = {
    __typename?: 'Artist',
   name: Scalars['String'],
+  albums: Array<Album>,
 };
 
 export type Attachment = {
    __typename?: 'Attachment',
-  id: Scalars['String'],
-  url: Scalars['String'],
-  filename: Scalars['String'],
-  size: Scalars['Int'],
-  type: Scalars['String'],
+  id?: Maybe<Scalars['String']>,
+  url?: Maybe<Scalars['String']>,
+  filename?: Maybe<Scalars['String']>,
+  size?: Maybe<Scalars['Int']>,
+  type?: Maybe<Scalars['String']>,
   thumbnails?: Maybe<Thumbnails>,
 };
 
 export type Query = {
    __typename?: 'Query',
-  albums: Array<Album>,
+  artist?: Maybe<Artist>,
   album?: Maybe<Album>,
 };
 
@@ -83,15 +83,16 @@ export type RootIndexQueryVariables = {};
 
 export type RootIndexQuery = (
   { __typename?: 'Query' }
-  & { albums: Array<(
-    { __typename?: 'Album' }
-    & Pick<Album, 'id' | 'albumTitle' | 'year' | 'shouldListenAlbum'>
-    & { albumCovers: Array<(
-      { __typename?: 'Attachment' }
-      & Pick<Attachment, 'url'>
-    )>, artist: Maybe<(
-      { __typename?: 'Artist' }
-      & Pick<Artist, 'name'>
+  & { artist: Maybe<(
+    { __typename?: 'Artist' }
+    & Pick<Artist, 'name'>
+    & { albums: Array<(
+      { __typename?: 'Album' }
+      & Pick<Album, 'id' | 'albumTitle' | 'year' | 'shouldListenAlbum'>
+      & { albumCovers: Array<(
+        { __typename?: 'Attachment' }
+        & Pick<Attachment, 'url'>
+      )> }
     )> }
   )> }
 );
@@ -99,16 +100,16 @@ export type RootIndexQuery = (
 
 export const RootIndexDocument = gql`
     query RootIndex {
-  albums {
-    id
-    albumTitle
-    year
-    shouldListenAlbum
-    albumCovers {
-      url
-    }
-    artist {
-      name
+  artist {
+    name
+    albums {
+      id
+      albumTitle
+      year
+      shouldListenAlbum
+      albumCovers {
+        url
+      }
     }
   }
 }

@@ -1,14 +1,14 @@
 query RootIndex {
-  albums {
-    id
-    albumTitle
-    year
-    shouldListenAlbum
-    albumCovers {
-      url
-    }
-    artist {
-      name
+  artist {
+    name
+    albums {
+      id
+      albumTitle
+      year
+      shouldListenAlbum
+      albumCovers {
+        url
+      }
     }
   }
 }

@@ -13,17 +13,18 @@ export type Scalars = {
 export type Album = {
    __typename?: 'Album',
   id?: Maybe<Scalars['ID']>,
-  albumTitle: Scalars['String'],
+  albumTitle?: Maybe<Scalars['String']>,
   albumCovers: Array<Attachment>,
-  year: Scalars['Int'],
-  shouldListenAlbum: Scalars['String'],
+  year?: Maybe<Scalars['Int']>,
+  shouldListenAlbum?: Maybe<Scalars['String']>,
   tracks?: Maybe<Array<Maybe<Scalars['ID']>>>,
+  artist?: Maybe<Artist>,
 };
 
 export type Artist = {
    __typename?: 'Artist',
-  name: Scalars['String'],
-  albums: Array<Album>,
+  name?: Maybe<Scalars['String']>,
+  albums?: Maybe<Array<Album>>,
 };
 
 export type Attachment = {
@@ -182,17 +183,18 @@ export type ResolversParentTypes = {
 
 export type AlbumResolvers<ContextType = any, ParentType extends ResolversParentTypes['Album'] = ResolversParentTypes['Album']> = {
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
-  albumTitle?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  albumTitle?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   albumCovers?: Resolver<Array<ResolversTypes['Attachment']>, ParentType, ContextType>,
-  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
-  shouldListenAlbum?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  shouldListenAlbum?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   tracks?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>,
+  artist?: Resolver<Maybe<ResolversTypes['Artist']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type ArtistResolvers<ContextType = any, ParentType extends ResolversParentTypes['Artist'] = ResolversParentTypes['Artist']> = {
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  albums?: Resolver<Array<ResolversTypes['Album']>, ParentType, ContextType>,
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  albums?: Resolver<Maybe<Array<ResolversTypes['Album']>>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 

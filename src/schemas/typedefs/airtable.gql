@@ -26,26 +26,27 @@ enum Side {
 
 type Track {
   id: ID
-  name: String!
-  albums: [ID]!
-  track: String!
-  side: Side!
+  name: String
+  albums: [ID]
+  track: String
+  side: Side
   mustHearTracks: Boolean
   specificInstrumentalCredit: String
 }
 
 type Artist {
-  name: String!
-  albums: [Album!]!
+  name: String
+  albums: [Album!]
 }
 
 type Album {
   id: ID
-  albumTitle: String!
+  albumTitle: String
   albumCovers: [Attachment!]!
-  year: Int!
-  shouldListenAlbum: String!
-  tracks: [ID]
+  year: Int
+  shouldListenAlbum: String
+  tracks: [Track]
+  artist: Artist
 }
 
 type Query {

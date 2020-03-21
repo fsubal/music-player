@@ -1,4 +1,4 @@
-query AlbumShow($id: ID!) {
+query AlbumsShow($id: ID!) {
   album(id: $id) {
     id
     albumTitle

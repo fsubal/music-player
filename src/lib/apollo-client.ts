@@ -4,6 +4,6 @@ import ApolloClient from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
 export default new ApolloClient({
-  link: createHttpLink({ uri: 'api/graphql' }),
+  link: createHttpLink({ uri: '/api/graphql' }),
   cache: new InMemoryCache(),
 })

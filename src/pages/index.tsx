@@ -25,12 +25,12 @@ const RootIndex: NextPage = () => {
 export default RootIndex
 
 const AlbumList: React.FC<{ artist: Artist }> = ({ artist }) => {
-  const essential = artist.albums.find(album => album.shouldListenAlbum === 'Essential')
+  const essential = artist.albums?.find(album => album.shouldListenAlbum === 'Essential')
 
   return (
     <div>
       {essential && (
-        <Jumbotron cover={essential.albumCovers[0].url!} title={artist.name}>
+        <Jumbotron cover={essential.albumCovers[0].url!} title={artist.name!}>
           <ArtistName>{artist.name}</ArtistName>
         </Jumbotron>
       )}
@@ -38,7 +38,7 @@ const AlbumList: React.FC<{ artist: Artist }> = ({ artist }) => {
       <Subheader>Albums</Subheader>
 
       <Grid>
-        {artist.albums.map(album => (
+        {artist.albums?.map(album => (
           <AlbumItem key={album.id!} album={album} />
         ))}
       </Grid>
@@ -91,7 +91,7 @@ const AlbumItem: React.FC<{ album: Album }> = ({ album }) => {
   const [cover] = album.albumCovers
 
   return (
-    <Link href="/tracks/[id]" as={`/tracks/${album.id}`}>
+    <Link href="/albums/[id]" as={`/albums/${album.id}`}>
       <AlbumLink>
         <CoverImage key={cover.url!} src={cover.url!} />
         <AlbumTitle>

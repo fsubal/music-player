@@ -14,17 +14,18 @@ export type Scalars = {
 export type Album = {
    __typename?: 'Album',
   id?: Maybe<Scalars['ID']>,
-  albumTitle: Scalars['String'],
+  albumTitle?: Maybe<Scalars['String']>,
   albumCovers: Array<Attachment>,
-  year: Scalars['Int'],
-  shouldListenAlbum: Scalars['String'],
+  year?: Maybe<Scalars['Int']>,
+  shouldListenAlbum?: Maybe<Scalars['String']>,
   tracks?: Maybe<Array<Maybe<Scalars['ID']>>>,
+  artist?: Maybe<Artist>,
 };
 
 export type Artist = {
    __typename?: 'Artist',
-  name: Scalars['String'],
-  albums: Array<Album>,
+  name?: Maybe<Scalars['String']>,
+  albums?: Maybe<Array<Album>>,
 };
 
 export type Attachment = {
@@ -78,6 +79,26 @@ export type Track = {
   specificInstrumentalCredit?: Maybe<Scalars['String']>,
 };
 
+export type AlbumsShowQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type AlbumsShowQuery = (
+  { __typename?: 'Query' }
+  & { album: Maybe<(
+    { __typename?: 'Album' }
+    & Pick<Album, 'id' | 'albumTitle' | 'year' | 'shouldListenAlbum'>
+    & { albumCovers: Array<(
+      { __typename?: 'Attachment' }
+      & Pick<Attachment, 'url'>
+    )>, artist: Maybe<(
+      { __typename?: 'Artist' }
+      & Pick<Artist, 'name'>
+    )> }
+  )> }
+);
+
 export type RootIndexQueryVariables = {};
 
 
@@ -86,18 +107,60 @@ export type RootIndexQuery = (
   & { artist: Maybe<(
     { __typename?: 'Artist' }
     & Pick<Artist, 'name'>
-    & { albums: Array<(
+    & { albums: Maybe<Array<(
       { __typename?: 'Album' }
       & Pick<Album, 'id' | 'albumTitle' | 'year' | 'shouldListenAlbum'>
       & { albumCovers: Array<(
         { __typename?: 'Attachment' }
         & Pick<Attachment, 'url'>
       )> }
-    )> }
+    )>> }
   )> }
 );
 
 
+export const AlbumsShowDocument = gql`
+    query AlbumsShow($id: ID!) {
+  album(id: $id) {
+    id
+    albumTitle
+    year
+    shouldListenAlbum
+    albumCovers {
+      url
+    }
+    artist {
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useAlbumsShowQuery__
+ *
+ * To run a query within a React component, call `useAlbumsShowQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAlbumsShowQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAlbumsShowQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAlbumsShowQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<AlbumsShowQuery, AlbumsShowQueryVariables>) {
+        return ApolloReactHooks.useQuery<AlbumsShowQuery, AlbumsShowQueryVariables>(AlbumsShowDocument, baseOptions);
+      }
+export function useAlbumsShowLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<AlbumsShowQuery, AlbumsShowQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<AlbumsShowQuery, AlbumsShowQueryVariables>(AlbumsShowDocument, baseOptions);
+        }
+export type AlbumsShowQueryHookResult = ReturnType<typeof useAlbumsShowQuery>;
+export type AlbumsShowLazyQueryHookResult = ReturnType<typeof useAlbumsShowLazyQuery>;
+export type AlbumsShowQueryResult = ApolloReactCommon.QueryResult<AlbumsShowQuery, AlbumsShowQueryVariables>;
 export const RootIndexDocument = gql`
     query RootIndex {
   artist {

@@ -1,9 +1,9 @@
 overwrite: true
 schema:
-  - ./src/schemas/typedefs/*.gql
+  - ./src/schemas/typedefs/**/*.gql
 documents:
-  - ./src/schemas/queries/*.gql
-  - ./src/schemas/mutations/*.gql
+  - ./src/schemas/queries/**/*.gql
+  - ./src/schemas/mutations/**/*.gql
 generates:
   ./src/schemas/dist/resolvers.ts:
     plugins:

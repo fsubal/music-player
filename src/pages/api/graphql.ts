@@ -2,6 +2,10 @@ import { ApolloServer } from 'apollo-server-micro'
 import airtable, { toEntity } from '../../lib/airtable'
 import airtableTypeDefs from '../../schemas/typedefs/airtable.gql'
 
+const ARTIST = {
+  name: 'David Bowie',
+}
+
 const apolloServer = new ApolloServer({
   typeDefs: airtableTypeDefs,
   resolvers: {
@@ -13,7 +17,7 @@ const apolloServer = new ApolloServer({
       },
       async artist() {
         return {
-          name: 'David Bowie',
+          ...ARTIST,
           albums: await airtable('Albums')
             .select()
             .all()
@@ -22,6 +26,9 @@ const apolloServer = new ApolloServer({
       },
     },
     Album: {
+      artist() {
+        return ARTIST
+      },
       albumTitle(album: any) {
         return album['Album Title']
       },
@@ -34,8 +41,26 @@ const apolloServer = new ApolloServer({
       year(album: any) {
         return album['Year']
       },
-      tracks(album: any) {
-        return album['Tracks']
+      async tracks(album: any) {
+        // FIXME: n + 1
+        return Promise.all(
+          album['Tracks'].map((id: string) =>
+            airtable('Tracks')
+              .find(id)
+              .then(toEntity),
+          ),
+        )
+      },
+    },
+    Track: {
+      track(track: any) {
+        return Number(track['Track #'])
+      },
+      side(track: any) {
+        return track['Side']
+      },
+      name(track: any) {
+        return track['Name']
       },
     },
   },

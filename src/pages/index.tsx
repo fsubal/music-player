@@ -24,8 +24,10 @@ const RootIndex: NextPage = () => {
 
 export default RootIndex
 
+const isEssential = (album: Album) => album.shouldListenAlbum === 'Essential'
+
 const AlbumList: React.FC<{ artist: Artist }> = ({ artist }) => {
-  const essential = artist.albums?.find(album => album.shouldListenAlbum === 'Essential')
+  const essential = artist.albums?.find(isEssential)
 
   return (
     <div>
@@ -35,8 +37,17 @@ const AlbumList: React.FC<{ artist: Artist }> = ({ artist }) => {
         </Jumbotron>
       )}
 
-      <Subheader>Albums</Subheader>
+      <Subheader>Must-hear Albums</Subheader>
+      <Grid>
+        {artist.albums
+          ?.filter(isEssential)
+          .slice(0, 3)
+          .map(album => (
+            <AlbumItem key={album.id!} album={album} />
+          ))}
+      </Grid>
 
+      <Subheader>All Albums</Subheader>
       <Grid>
         {artist.albums?.map(album => (
           <AlbumItem key={album.id!} album={album} />

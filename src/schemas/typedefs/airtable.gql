@@ -32,6 +32,7 @@ type Track {
   side: Side
   mustHearTracks: Boolean
   specificInstrumentalCredit: String
+  url: String
 }
 
 type Artist {

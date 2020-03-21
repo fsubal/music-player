@@ -53,7 +53,7 @@ export type QueryAlbumArgs = {
 export type Review = {
    __typename?: 'Review',
   reviewer?: Maybe<Scalars['String']>,
-  rate?: Maybe<Array<Scalars['Float']>>,
+  rate?: Maybe<Array<Maybe<Scalars['Float']>>>,
 };
 
 export enum Side {
@@ -84,6 +84,7 @@ export type Track = {
   side?: Maybe<Side>,
   mustHearTracks?: Maybe<Scalars['Boolean']>,
   specificInstrumentalCredit?: Maybe<Scalars['String']>,
+  url?: Maybe<Scalars['String']>,
 };
 
 export type AlbumsShowQueryVariables = {
@@ -107,7 +108,7 @@ export type AlbumsShowQuery = (
       & Pick<Artist, 'name'>
     )>, tracks: Maybe<Array<Maybe<(
       { __typename?: 'Track' }
-      & Pick<Track, 'id' | 'track' | 'name' | 'side' | 'mustHearTracks'>
+      & Pick<Track, 'id' | 'track' | 'name' | 'side' | 'mustHearTracks' | 'url'>
     )>>> }
   )> }
 );
@@ -155,6 +156,7 @@ export const AlbumsShowDocument = gql`
       name
       side
       mustHearTracks
+      url
     }
   }
 }

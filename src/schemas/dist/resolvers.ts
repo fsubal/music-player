@@ -83,6 +83,7 @@ export type Track = {
   side?: Maybe<Side>,
   mustHearTracks?: Maybe<Scalars['Boolean']>,
   specificInstrumentalCredit?: Maybe<Scalars['String']>,
+  url?: Maybe<Scalars['String']>,
 };
 
 
@@ -253,6 +254,7 @@ export type TrackResolvers<ContextType = any, ParentType extends ResolversParent
   side?: Resolver<Maybe<ResolversTypes['Side']>, ParentType, ContextType>,
   mustHearTracks?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   specificInstrumentalCredit?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 

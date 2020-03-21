@@ -86,6 +86,9 @@ const apolloServer = new ApolloServer({
       name(track: any) {
         return track['Name']
       },
+      url(track: any) {
+        return track['URL']
+      },
     },
   },
 })

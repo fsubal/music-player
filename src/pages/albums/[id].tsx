@@ -71,7 +71,7 @@ const AlbumProfile: React.FC<{ album: Album }> = ({ album }) => {
   )
 }
 
-const RatingScore: React.FC<{ rate: number[] }> = ({ rate: [score, max] }) => {
+const RatingScore: React.FC<{ rate: (number | null)[] }> = ({ rate: [score, max] }) => {
   if (score === null || max === null) {
     return <div>---</div>
   }
@@ -138,7 +138,7 @@ const TrackList: React.FC<{ album: Album }> = ({ album }) => {
                 <tr key={track?.id!}>
                   <td>{track!.mustHearTracks ? '★' : null}</td>
                   <td>{track!.track}</td>
-                  <td>{track!.name}</td>
+                  <td>{track?.url ? <a>{track!.name}</a> : track!.name}</td>
                   <td>{album.artist?.name}</td>
                 </tr>
               ))}

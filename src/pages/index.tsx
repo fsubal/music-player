@@ -83,7 +83,8 @@ const ArtistName = styled.h1`
   left: 0;
   color: #fff;
   display: block;
-  padding: 0 16px;
+  padding: 16px;
+  margin: 0;
   width: 100%;
   background: linear-gradient(to top, #000, transparent);
 `
@@ -94,8 +95,10 @@ const Subheader = styled.h2`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 32% 32% 32%;
-  grid-gap: 2%;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-row: 1;
+  grid-gap: 16px 2%;
+  margin-bottom: 24px;
 `
 
 const AlbumItem: React.FC<{ album: Album }> = ({ album }) => {
@@ -106,7 +109,8 @@ const AlbumItem: React.FC<{ album: Album }> = ({ album }) => {
       <AlbumLink>
         <CoverImage key={cover.url!} src={cover.url!} />
         <AlbumTitle>
-          {album.albumTitle}（{album.year}）
+          <LineClamp>{album.albumTitle}</LineClamp>
+          <Year>{album.year}</Year>
         </AlbumTitle>
       </AlbumLink>
     </Link>
@@ -127,6 +131,18 @@ const AlbumTitle = styled.div`
   padding: 16px;
   bottom: 0;
   left: 0;
+`
+
+const LineClamp = styled.div`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+`
+
+const Year = styled.div`
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
 `
 
 const CoverImage = styled.img`

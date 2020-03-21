@@ -17,6 +17,7 @@ export type Album = {
   albumTitle?: Maybe<Scalars['String']>,
   albumCovers: Array<Attachment>,
   year?: Maybe<Scalars['Int']>,
+  reviews?: Maybe<Array<Review>>,
   shouldListenAlbum?: Maybe<Scalars['String']>,
   tracks?: Maybe<Array<Maybe<Track>>>,
   artist?: Maybe<Artist>,
@@ -49,6 +50,12 @@ export type QueryAlbumArgs = {
   id: Scalars['ID']
 };
 
+export type Review = {
+   __typename?: 'Review',
+  reviewer?: Maybe<Scalars['String']>,
+  rate?: Maybe<Array<Scalars['Float']>>,
+};
+
 export enum Side {
   A = 'A',
   B = 'B'
@@ -73,7 +80,7 @@ export type Track = {
   id?: Maybe<Scalars['ID']>,
   name?: Maybe<Scalars['String']>,
   albums?: Maybe<Array<Maybe<Scalars['ID']>>>,
-  track?: Maybe<Scalars['String']>,
+  track?: Maybe<Scalars['Int']>,
   side?: Maybe<Side>,
   mustHearTracks?: Maybe<Scalars['Boolean']>,
   specificInstrumentalCredit?: Maybe<Scalars['String']>,
@@ -92,7 +99,10 @@ export type AlbumsShowQuery = (
     & { albumCovers: Array<(
       { __typename?: 'Attachment' }
       & Pick<Attachment, 'url'>
-    )>, artist: Maybe<(
+    )>, reviews: Maybe<Array<(
+      { __typename?: 'Review' }
+      & Pick<Review, 'reviewer' | 'rate'>
+    )>>, artist: Maybe<(
       { __typename?: 'Artist' }
       & Pick<Artist, 'name'>
     )>, tracks: Maybe<Array<Maybe<(
@@ -131,6 +141,10 @@ export const AlbumsShowDocument = gql`
     shouldListenAlbum
     albumCovers {
       url
+    }
+    reviews {
+      reviewer
+      rate
     }
     artist {
       name

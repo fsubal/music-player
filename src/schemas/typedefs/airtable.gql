@@ -39,11 +39,17 @@ type Artist {
   albums: [Album!]
 }
 
+type Review {
+  reviewer: String
+  rate: [Float]
+}
+
 type Album {
   id: ID
   albumTitle: String
   albumCovers: [Attachment!]!
   year: Int
+  reviews: [Review!]
   shouldListenAlbum: String
   tracks: [Track]
   artist: Artist

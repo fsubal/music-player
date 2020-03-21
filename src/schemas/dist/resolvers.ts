@@ -16,6 +16,7 @@ export type Album = {
   albumTitle?: Maybe<Scalars['String']>,
   albumCovers: Array<Attachment>,
   year?: Maybe<Scalars['Int']>,
+  reviews?: Maybe<Array<Review>>,
   shouldListenAlbum?: Maybe<Scalars['String']>,
   tracks?: Maybe<Array<Maybe<Track>>>,
   artist?: Maybe<Artist>,
@@ -48,6 +49,12 @@ export type QueryAlbumArgs = {
   id: Scalars['ID']
 };
 
+export type Review = {
+   __typename?: 'Review',
+  reviewer?: Maybe<Scalars['String']>,
+  rate?: Maybe<Array<Scalars['Float']>>,
+};
+
 export enum Side {
   A = 'A',
   B = 'B'
@@ -72,7 +79,7 @@ export type Track = {
   id?: Maybe<Scalars['ID']>,
   name?: Maybe<Scalars['String']>,
   albums?: Maybe<Array<Maybe<Scalars['ID']>>>,
-  track?: Maybe<Scalars['String']>,
+  track?: Maybe<Scalars['Int']>,
   side?: Maybe<Side>,
   mustHearTracks?: Maybe<Scalars['Boolean']>,
   specificInstrumentalCredit?: Maybe<Scalars['String']>,
@@ -160,6 +167,8 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>,
   Thumbnails: ResolverTypeWrapper<Thumbnails>,
   Thumbnail: ResolverTypeWrapper<Thumbnail>,
+  Review: ResolverTypeWrapper<Review>,
+  Float: ResolverTypeWrapper<Scalars['Float']>,
   Track: ResolverTypeWrapper<Track>,
   Side: Side,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
@@ -176,6 +185,8 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'],
   Thumbnails: Thumbnails,
   Thumbnail: Thumbnail,
+  Review: Review,
+  Float: Scalars['Float'],
   Track: Track,
   Side: Side,
   Boolean: Scalars['Boolean'],
@@ -186,6 +197,7 @@ export type AlbumResolvers<ContextType = any, ParentType extends ResolversParent
   albumTitle?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   albumCovers?: Resolver<Array<ResolversTypes['Attachment']>, ParentType, ContextType>,
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  reviews?: Resolver<Maybe<Array<ResolversTypes['Review']>>, ParentType, ContextType>,
   shouldListenAlbum?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   tracks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Track']>>>, ParentType, ContextType>,
   artist?: Resolver<Maybe<ResolversTypes['Artist']>, ParentType, ContextType>,
@@ -213,6 +225,12 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   album?: Resolver<Maybe<ResolversTypes['Album']>, ParentType, ContextType, RequireFields<QueryAlbumArgs, 'id'>>,
 };
 
+export type ReviewResolvers<ContextType = any, ParentType extends ResolversParentTypes['Review'] = ResolversParentTypes['Review']> = {
+  reviewer?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  rate?: Resolver<Maybe<Array<ResolversTypes['Float']>>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
 export type ThumbnailResolvers<ContextType = any, ParentType extends ResolversParentTypes['Thumbnail'] = ResolversParentTypes['Thumbnail']> = {
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
@@ -231,7 +249,7 @@ export type TrackResolvers<ContextType = any, ParentType extends ResolversParent
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   albums?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>,
-  track?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  track?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   side?: Resolver<Maybe<ResolversTypes['Side']>, ParentType, ContextType>,
   mustHearTracks?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   specificInstrumentalCredit?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
@@ -243,6 +261,7 @@ export type Resolvers<ContextType = any> = {
   Artist?: ArtistResolvers<ContextType>,
   Attachment?: AttachmentResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
+  Review?: ReviewResolvers<ContextType>,
   Thumbnail?: ThumbnailResolvers<ContextType>,
   Thumbnails?: ThumbnailsResolvers<ContextType>,
   Track?: TrackResolvers<ContextType>,

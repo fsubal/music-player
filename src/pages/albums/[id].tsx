@@ -44,11 +44,43 @@ const AlbumProfile: React.FC<{ album: Album }> = ({ album }) => {
         </AlbumCover>
         <Description>
           <h1>{album.albumTitle}</h1>
-          <Link href="/" as="/">
-            <a>{album.artist?.name}</a>
-          </Link>
+          <div>
+            <Link href="/" as="/">
+              <a>{album.artist?.name}</a>
+            </Link>
+            ・{album.year}
+          </div>
+
+          <hr />
+          {album.reviews?.length && (
+            <div>
+              <h4>Reviews</h4>
+              {album.reviews.map(review => (
+                <Review>
+                  <dt>{review.reviewer}</dt>
+                  <dd>
+                    <RatingScore rate={review.rate!} />
+                  </dd>
+                </Review>
+              ))}
+            </div>
+          )}
         </Description>
       </Row>
+    </div>
+  )
+}
+
+const RatingScore: React.FC<{ rate: number[] }> = ({ rate: [score, max] }) => {
+  if (score === null || max === null) {
+    return <div>---</div>
+  }
+
+  return (
+    <div>
+      <strong>{score}</strong>
+      &nbsp;/&nbsp;
+      {max}
     </div>
   )
 }
@@ -62,7 +94,8 @@ const Row = styled.div`
 const AlbumCover = styled.div`
   width: 300px;
   max-width: 50%;
-  padding: 0 8px 8px 0;
+  padding: 0 16px 16px 0;
+  line-height: 0;
 
   img {
     width: 100%;
@@ -71,6 +104,15 @@ const AlbumCover = styled.div`
 
 const Description = styled.div`
   flex: 1 0;
+`
+
+const Review = styled.dl`
+  display: flex;
+
+  dt,
+  dl {
+    flex: 1 0;
+  }
 `
 
 const TrackList: React.FC<{ album: Album }> = ({ album }) => {

@@ -41,6 +41,27 @@ const apolloServer = new ApolloServer({
       year(album: any) {
         return album['Year']
       },
+      reviews(album: any) {
+        try {
+          return (album['Reviews'] as string)
+            .split('\n')
+            .filter(l => l !== '')
+            .map(line => {
+              const [reviewer, content] = line.split(':').map(s => s.trim())
+              const [score, max] = content
+                .split('/')
+                .map(s => s.trim())
+                .map(s => parseFloat(s))
+
+              return {
+                reviewer,
+                rate: [score, max],
+              }
+            })
+        } catch {
+          return []
+        }
+      },
       async tracks(album: any) {
         // FIXME: n + 1
         return Promise.all(

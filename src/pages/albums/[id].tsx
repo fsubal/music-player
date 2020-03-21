@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useContext } from 'react'
 import { NextPage } from 'next'
 import { useAlbumsShowQuery, Album } from '../../schemas/dist/client'
 import styled from 'styled-components'
 import Link from 'next/link'
 import groupBy from 'lodash/groupBy'
 import sortBy from 'lodash/sortBy'
+import { PlayerContext } from '../../components/SoundPlayer'
 
 interface Props {
   id: string
@@ -116,8 +117,23 @@ const Review = styled.dl`
 `
 
 const TrackList: React.FC<{ album: Album }> = ({ album }) => {
+  const [playing, setPlaying] = useContext(PlayerContext)
+
   const trackGroups = useMemo(() => groupBy(album.tracks, t => t!.side), [album.tracks])
   const sortedTrackGroups = sortBy(Object.entries(trackGroups), ([side]) => side)
+
+  const onSelect = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    const id = e.currentTarget.dataset.id
+    const track = album.tracks?.find(t => t?.id === id)
+
+    if (track) {
+      setPlaying({
+        album,
+        track,
+      })
+    }
+  }
 
   return (
     <>
@@ -137,8 +153,16 @@ const TrackList: React.FC<{ album: Album }> = ({ album }) => {
               {sortBy(tracks, t => t!.track).map(track => (
                 <tr key={track?.id!}>
                   <td>{track!.mustHearTracks ? '★' : null}</td>
-                  <td>{track!.track}</td>
-                  <td>{track?.url ? <a>{track!.name}</a> : track!.name}</td>
+                  <td>{playing?.track.id === track?.id ? '🎧' : track!.track}</td>
+                  <td>
+                    {track?.url ? (
+                      <a href="#" data-id={track!.id} onClick={onSelect}>
+                        {track!.name}
+                      </a>
+                    ) : (
+                      track!.name
+                    )}
+                  </td>
                   <td>{album.artist?.name}</td>
                 </tr>
               ))}

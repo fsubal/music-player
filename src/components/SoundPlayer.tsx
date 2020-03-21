@@ -1,33 +1,61 @@
 import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Track } from '../schemas/dist/client'
+import { Track, Album } from '../schemas/dist/client'
 import styled from 'styled-components'
 
-type TrackPlayer = [Track | null, (next: Track | null) => void]
+interface PlayerState {
+  track: Track
+  album: Album
+}
 
-const Sound = React.createContext<TrackPlayer | null>(null)
+type TrackPlayer = [PlayerState | null, (next: PlayerState | null) => void]
+
+export const PlayerContext = React.createContext<TrackPlayer>([null, () => {}])
 
 const SoundPlayer: React.FC = ({ children }) => {
-  const [track, setTrack] = useState<Track | null>(null)
+  const [playing, setPlaying] = useState<PlayerState | null>(null)
 
   if (!process.browser) {
     return <>{children}</>
   }
 
   return (
-    <Sound.Provider value={[track, setTrack]}>
+    <PlayerContext.Provider value={[playing, setPlaying]}>
       {children}
-      {createPortal(
-        <Controller>
-          <Inner>▶ not playing</Inner>
-        </Controller>,
-        document.body,
-      )}
-    </Sound.Provider>
+      {createPortal(<PlayerPortal playing={playing} />, document.body)}
+    </PlayerContext.Provider>
   )
 }
 
 export default SoundPlayer
+
+const PlayerPortal: React.FC<{ playing: PlayerState | null }> = ({ playing }) => {
+  return (
+    <Controller>
+      <Inner>
+        {playing === null ? (
+          '---'
+        ) : (
+          <>
+            🎧&nbsp;
+            <CoverThumbnail src={playing.album.albumCovers[0].url!} />
+            &nbsp;
+            {playing.track.name} / {playing.album.artist?.name}
+            <ProgressBar />
+            <a href="#">⏪</a>
+            <a href="#">⏸</a>
+            <a href="#">⏩</a>
+          </>
+        )}
+      </Inner>
+    </Controller>
+  )
+}
+
+const CoverThumbnail = styled.img`
+  width: 1em;
+  height: 1em;
+`
 
 const Controller = styled.div`
   position: fixed;
@@ -35,10 +63,17 @@ const Controller = styled.div`
   left: 0;
   width: 100%;
   background: #fff;
+  box-shadow: 0 -3px 24px rgba(0, 0, 0, 0.1);
 `
 
 const Inner = styled.div`
+  display: flex;
+  align-items: center;
   max-width: 768px;
   padding: 16px;
   margin: 0 auto;
+`
+
+const ProgressBar = styled.div`
+  flex: 1 0;
 `

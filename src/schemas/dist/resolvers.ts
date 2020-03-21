@@ -17,7 +17,7 @@ export type Album = {
   albumCovers: Array<Attachment>,
   year?: Maybe<Scalars['Int']>,
   shouldListenAlbum?: Maybe<Scalars['String']>,
-  tracks?: Maybe<Array<Maybe<Scalars['ID']>>>,
+  tracks?: Maybe<Array<Maybe<Track>>>,
   artist?: Maybe<Artist>,
 };
 
@@ -70,10 +70,10 @@ export type Thumbnails = {
 export type Track = {
    __typename?: 'Track',
   id?: Maybe<Scalars['ID']>,
-  name: Scalars['String'],
-  albums: Array<Maybe<Scalars['ID']>>,
-  track: Scalars['String'],
-  side: Side,
+  name?: Maybe<Scalars['String']>,
+  albums?: Maybe<Array<Maybe<Scalars['ID']>>>,
+  track?: Maybe<Scalars['String']>,
+  side?: Maybe<Side>,
   mustHearTracks?: Maybe<Scalars['Boolean']>,
   specificInstrumentalCredit?: Maybe<Scalars['String']>,
 };
@@ -160,9 +160,9 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>,
   Thumbnails: ResolverTypeWrapper<Thumbnails>,
   Thumbnail: ResolverTypeWrapper<Thumbnail>,
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
-  Side: Side,
   Track: ResolverTypeWrapper<Track>,
+  Side: Side,
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -176,9 +176,9 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'],
   Thumbnails: Thumbnails,
   Thumbnail: Thumbnail,
-  Boolean: Scalars['Boolean'],
-  Side: Side,
   Track: Track,
+  Side: Side,
+  Boolean: Scalars['Boolean'],
 };
 
 export type AlbumResolvers<ContextType = any, ParentType extends ResolversParentTypes['Album'] = ResolversParentTypes['Album']> = {
@@ -187,7 +187,7 @@ export type AlbumResolvers<ContextType = any, ParentType extends ResolversParent
   albumCovers?: Resolver<Array<ResolversTypes['Attachment']>, ParentType, ContextType>,
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   shouldListenAlbum?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  tracks?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>,
+  tracks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Track']>>>, ParentType, ContextType>,
   artist?: Resolver<Maybe<ResolversTypes['Artist']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
@@ -229,10 +229,10 @@ export type ThumbnailsResolvers<ContextType = any, ParentType extends ResolversP
 
 export type TrackResolvers<ContextType = any, ParentType extends ResolversParentTypes['Track'] = ResolversParentTypes['Track']> = {
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  albums?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>,
-  track?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  side?: Resolver<ResolversTypes['Side'], ParentType, ContextType>,
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  albums?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>,
+  track?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  side?: Resolver<Maybe<ResolversTypes['Side']>, ParentType, ContextType>,
   mustHearTracks?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   specificInstrumentalCredit?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,

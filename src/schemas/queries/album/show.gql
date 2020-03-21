@@ -10,5 +10,12 @@ query AlbumsShow($id: ID!) {
     artist {
       name
     }
+    tracks {
+      id
+      track
+      name
+      side
+      mustHearTracks
+    }
   }
 }

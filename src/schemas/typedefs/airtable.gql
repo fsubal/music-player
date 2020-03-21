@@ -28,7 +28,7 @@ type Track {
   id: ID
   name: String
   albums: [ID]
-  track: String
+  track: Int
   side: Side
   mustHearTracks: Boolean
   specificInstrumentalCredit: String

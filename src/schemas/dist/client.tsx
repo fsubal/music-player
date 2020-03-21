@@ -18,7 +18,7 @@ export type Album = {
   albumCovers: Array<Attachment>,
   year?: Maybe<Scalars['Int']>,
   shouldListenAlbum?: Maybe<Scalars['String']>,
-  tracks?: Maybe<Array<Maybe<Scalars['ID']>>>,
+  tracks?: Maybe<Array<Maybe<Track>>>,
   artist?: Maybe<Artist>,
 };
 
@@ -71,10 +71,10 @@ export type Thumbnails = {
 export type Track = {
    __typename?: 'Track',
   id?: Maybe<Scalars['ID']>,
-  name: Scalars['String'],
-  albums: Array<Maybe<Scalars['ID']>>,
-  track: Scalars['String'],
-  side: Side,
+  name?: Maybe<Scalars['String']>,
+  albums?: Maybe<Array<Maybe<Scalars['ID']>>>,
+  track?: Maybe<Scalars['String']>,
+  side?: Maybe<Side>,
   mustHearTracks?: Maybe<Scalars['Boolean']>,
   specificInstrumentalCredit?: Maybe<Scalars['String']>,
 };
@@ -95,7 +95,10 @@ export type AlbumsShowQuery = (
     )>, artist: Maybe<(
       { __typename?: 'Artist' }
       & Pick<Artist, 'name'>
-    )> }
+    )>, tracks: Maybe<Array<Maybe<(
+      { __typename?: 'Track' }
+      & Pick<Track, 'id' | 'track' | 'name' | 'side' | 'mustHearTracks'>
+    )>>> }
   )> }
 );
 
@@ -131,6 +134,13 @@ export const AlbumsShowDocument = gql`
     }
     artist {
       name
+    }
+    tracks {
+      id
+      track
+      name
+      side
+      mustHearTracks
     }
   }
 }

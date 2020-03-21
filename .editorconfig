@@ -88,4 +88,8 @@ indent_size = 4
 indent_style = space
 indent_size = 2
 
+[{*.gql,*.graphql}]
+indent_style = space
+indent_size = 2
+
 # p(ixi)v

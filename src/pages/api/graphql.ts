@@ -59,6 +59,9 @@ const apolloServer = new ApolloServer({
       side(track: any) {
         return track['Side']
       },
+      mustHearTracks(track: any) {
+        return track['Must-Hear Tracks']
+      },
       name(track: any) {
         return track['Name']
       },

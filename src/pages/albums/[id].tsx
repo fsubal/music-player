@@ -6,6 +6,7 @@ import Link from 'next/link'
 import groupBy from 'lodash/groupBy'
 import sortBy from 'lodash/sortBy'
 import { PlayerContext } from '../../components/SoundPlayer'
+import Head from 'next/head'
 
 interface Props {
   id: string
@@ -57,7 +58,7 @@ const AlbumProfile: React.FC<{ album: Album }> = ({ album }) => {
             <div>
               <h4>Reviews</h4>
               {album.reviews.map(review => (
-                <Review>
+                <Review key={review.reviewer!}>
                   <dt>{review.reviewer}</dt>
                   <dd>
                     <RatingScore rate={review.rate!} />
@@ -152,6 +153,8 @@ const TrackList: React.FC<{ album: Album }> = ({ album }) => {
             <tbody>
               {sortBy(tracks, t => t!.track).map(track => (
                 <tr key={track?.id!}>
+                  <Head>{track?.url && <link rel="prefetch" as="document" href={track.url} />}</Head>
+
                   <td>{track!.mustHearTracks ? '★' : null}</td>
                   <td>{playing?.track.id === track?.id ? '🎧' : track!.track}</td>
                   <td>

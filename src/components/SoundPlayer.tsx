@@ -30,50 +30,49 @@ const SoundPlayer: React.FC = ({ children }) => {
 export default SoundPlayer
 
 const PlayerPortal: React.FC<{ playing: PlayerState | null }> = ({ playing }) => {
+  // FIXME: store youtube id instead of url
+  const id = playing?.track.url ? new URL(playing?.track.url!).searchParams.get('v') : null
+
   return (
-    <Controller>
-      <Inner>
-        {playing === null ? (
-          '---'
-        ) : (
-          <>
-            🎧&nbsp;
-            <CoverThumbnail src={playing.album.albumCovers[0].url!} />
-            &nbsp;
-            {playing.track.name} / {playing.album.artist?.name}
-            <ProgressBar />
-            <a href="#">⏪</a>
-            <a href="#">⏸</a>
-            <a href="#">⏩</a>
-          </>
-        )}
-      </Inner>
-    </Controller>
+    <>
+      {playing === null ? null : (
+        <Controller>
+          <Inner>
+            <h4>🎧 {playing.track.name}</h4>
+            <br />
+            <ArtistName>{playing.album.artist?.name}</ArtistName>
+          </Inner>
+          <YoutubePlayer
+            width="336"
+            height="192"
+            src={`https://www.youtube-nocookie.com/embed/${id!}?autoplay=1`}
+            frameBorder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </Controller>
+      )}
+    </>
   )
 }
 
-const CoverThumbnail = styled.img`
-  width: 1em;
-  height: 1em;
-`
-
 const Controller = styled.div`
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  bottom: 16px;
+  right: 16px;
+  width: 336px;
   background: #fff;
   box-shadow: 0 -3px 24px rgba(0, 0, 0, 0.1);
 `
 
 const Inner = styled.div`
-  display: flex;
-  align-items: center;
-  max-width: 768px;
   padding: 16px;
-  margin: 0 auto;
 `
 
-const ProgressBar = styled.div`
-  flex: 1 0;
+const ArtistName = styled.div`
+  color: rgba(0, 0, 0, 0.4);
+`
+
+const YoutubePlayer = styled.iframe`
+  display: block;
 `

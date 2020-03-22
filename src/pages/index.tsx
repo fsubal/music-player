@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { useRootIndexQuery, Artist, Album } from '../schemas/dist/client'
+import { PlayerContext } from '../components/SoundPlayer'
 
 const RootIndex: NextPage = () => {
   const { loading, data, error } = useRootIndexQuery()
@@ -102,6 +103,7 @@ const Grid = styled.div`
 `
 
 const AlbumItem: React.FC<{ album: Album }> = ({ album }) => {
+  const [playing] = useContext(PlayerContext)
   const [cover] = album.albumCovers
 
   return (
@@ -109,7 +111,10 @@ const AlbumItem: React.FC<{ album: Album }> = ({ album }) => {
       <AlbumLink>
         <CoverImage key={cover.url!} src={cover.url!} />
         <AlbumTitle>
-          <LineClamp>{album.albumTitle}</LineClamp>
+          <LineClamp>
+            {playing?.album.id === album.id && '🎧 '}
+            {album.albumTitle}
+          </LineClamp>
           <Year>{album.year}</Year>
         </AlbumTitle>
       </AlbumLink>

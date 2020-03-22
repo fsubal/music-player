@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Track, Album } from '../schemas/dist/client'
 import styled from 'styled-components'
 
@@ -14,10 +15,14 @@ export const PlayerContext = React.createContext<TrackPlayer>([null, () => {}])
 const SoundPlayer: React.FC = ({ children }) => {
   const [playing, setPlaying] = useState<PlayerState | null>(null)
 
+  if (!process.browser) {
+    return <>{children}</>
+  }
+
   return (
     <PlayerContext.Provider value={[playing, setPlaying]}>
       {children}
-      <PlayerPortal playing={playing} />
+      {createPortal(<PlayerPortal playing={playing} />, document.body)}
     </PlayerContext.Provider>
   )
 }

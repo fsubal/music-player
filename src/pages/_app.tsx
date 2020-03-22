@@ -11,19 +11,7 @@ export default class MyDocument extends App {
     return (
       <ApolloProvider client={apolloClient}>
         <SoundPlayer>
-          <main>
-            <Component {...pageProps} />
-            <footer>
-              Powered by:&nbsp;
-              <a
-                href="https://airtable.com/universe/expgUKB29QrEDV4AT/david-bowie-1969-1983-the-golden-years"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                "David Bowie 1969-1983: The Golden Years" - Airtable Universe
-              </a>
-            </footer>
-          </main>
+          <Component {...pageProps} />
         </SoundPlayer>
       </ApolloProvider>
     )
